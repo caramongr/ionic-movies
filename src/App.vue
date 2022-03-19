@@ -4,8 +4,8 @@
       <ion-menu content-id="main-content" type="overlay">
         <ion-content>
           <ion-list id="inbox-list">
-            <ion-list-header>Inbox</ion-list-header>
-            <ion-note>hi@ionicframework.com</ion-note>
+            <ion-list-header>Movie Vue</ion-list-header>
+            <ion-note>Discover movies</ion-note>
   
             <ion-menu-toggle auto-hide="false" v-for="(p, i) in appPages" :key="i">
               <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
@@ -15,14 +15,14 @@
             </ion-menu-toggle>
           </ion-list>
   
-          <ion-list id="labels-list">
+          <!-- <ion-list id="labels-list">
             <ion-list-header>Labels</ion-list-header>
   
             <ion-item v-for="(label, index) in labels" lines="none" :key="index">
               <ion-icon slot="start" :ios="bookmarkOutline" :md="bookmarkSharp"></ion-icon>
               <ion-label>{{ label }}</ion-label>
             </ion-item>
-          </ion-list>
+          </ion-list> -->
         </ion-content>
       </ion-menu>
       <ion-router-outlet id="main-content"></ion-router-outlet>
@@ -31,10 +31,13 @@
 </template>
 
 <script lang="ts">
-import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
+import { IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, 
+IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane } from '@ionic/vue';
 import { defineComponent, ref } from 'vue';
 import { useRoute } from 'vue-router';
-import { archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp } from 'ionicons/icons';
+// Update the icons
+import {  heartOutline, heartSharp, flashOutline, flashSharp, 
+diamondOutline, diamondSharp, rocketOutline, rocketSharp } from 'ionicons/icons';
 
 export default defineComponent({
   name: 'App',
@@ -54,75 +57,60 @@ export default defineComponent({
   },
   setup() {
     const selectedIndex = ref(0);
+    // Rename the tabs and update the icons
     const appPages = [
       {
-        title: 'Inbox',
-        url: '/folder/Inbox',
-        iosIcon: mailOutline,
-        mdIcon: mailSharp
+        title: 'Now Playing',
+        url: '/folder/Now Playing',
+        iosIcon: flashOutline,
+        mdIcon: flashSharp
       },
       {
-        title: 'Outbox',
-        url: '/folder/Outbox',
-        iosIcon: paperPlaneOutline,
-        mdIcon: paperPlaneSharp
-      },
-      {
-        title: 'Favorites',
-        url: '/folder/Favorites',
+        title: 'Popular',
+        url: '/folder/Popular',
         iosIcon: heartOutline,
         mdIcon: heartSharp
       },
       {
-        title: 'Archived',
-        url: '/folder/Archived',
-        iosIcon: archiveOutline,
-        mdIcon: archiveSharp
+        title: 'Top Rated',
+        url: '/folder/Top Rated',
+        iosIcon: diamondOutline,
+        mdIcon: diamondSharp
       },
       {
-        title: 'Trash',
-        url: '/folder/Trash',
-        iosIcon: trashOutline,
-        mdIcon: trashSharp
-      },
-      {
-        title: 'Spam',
-        url: '/folder/Spam',
-        iosIcon: warningOutline,
-        mdIcon: warningSharp
+        title: 'Upcoming',
+        url: '/folder/Upcoming',
+        iosIcon: rocketOutline,
+        mdIcon: rocketSharp
       }
     ];
-    const labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
+    // Remove Labels
     
     const path = window.location.pathname.split('folder/')[1];
     if (path !== undefined) {
-      selectedIndex.value = appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+      selectedIndex.value = appPages
+      .findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
     
     const route = useRoute();
     
     return { 
       selectedIndex,
-      appPages, 
-      labels,
-      archiveOutline, 
-      archiveSharp, 
-      bookmarkOutline, 
-      bookmarkSharp, 
-      heartOutline, 
-      heartSharp, 
-      mailOutline, 
-      mailSharp, 
-      paperPlaneOutline, 
-      paperPlaneSharp, 
-      trashOutline, 
-      trashSharp, 
-      warningOutline, 
-      warningSharp,
+      appPages,
+      // Update the icons
+      heartOutline,
+      heartSharp,
+      flashOutline,
+      flashSharp,
+      diamondOutline,
+      diamondSharp,
+      rocketOutline,
+      rocketSharp,
       isSelected: (url: string) => url === route.path ? 'selected' : ''
     }
   }
 });
+
 </script>
 
 <style scoped>
